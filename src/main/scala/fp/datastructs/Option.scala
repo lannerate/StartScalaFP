@@ -19,6 +19,8 @@ sealed trait Option[+A] {
   def getOrElse[B >:A](default: => B): B
 
   def orElse[B >:A](ob : =>Option[B]): Option[B]
+
+  def filter(f: A => Boolean): Option[A]
 }
 
 case class Some[+A](x: A) extends Option[A] {
@@ -33,6 +35,8 @@ case class Some[+A](x: A) extends Option[A] {
   override def getOrElse[B >: A](default: => B): B = if(x == null) default else x
 
   override def orElse[B >: A](ob: => Option[B]): Option[B] = if (x == null) ob else Some(x)
+
+  override def filter(f: (A) => Boolean): Option[A] = if (f(x)) Some(x) else None
 }
 
 case object None extends Option[Nothing] {
@@ -47,6 +51,8 @@ case object None extends Option[Nothing] {
   override def getOrElse[B >: Nothing](default: => B): B = default
 
   override def orElse[B >: Nothing](ob: => Option[B]): Option[B] = ob
+
+  override def filter(f: (Nothing) => Boolean): Option[Nothing] = None
 }
 
 object Option {
