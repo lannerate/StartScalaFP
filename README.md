@@ -7,6 +7,7 @@ The purpose of the project is improving the level of functional programming usin
 we try to implement the Scala standard library by Pure Functional Programming.
 
 - Tail recursion
+- Collection(List,Tree,Option)
 - Streaming
 - Monads
 - Monoids
