@@ -57,9 +57,19 @@ case object None extends Option[Nothing] {
 
 object Option {
 
+
+  def apply[A](x: A):Option[A] = if (x == null) None else Some(x)
+
+}
+
+object Math {
+
   def mean(xs: Seq[Double]): Option[Double] =
     if (xs.isEmpty) None
     else Some(xs.sum / xs.length)
 
-  def apply[A](x: A):Option[A] = if (x == null) None else Some(x)
+
+  def variance(xs:Seq[Double]):Option[Double] =
+    mean(xs) flatMap (m => mean( xs.map( x => math.pow(x-m,2) ) ))
+
 }
