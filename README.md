@@ -1,4 +1,4 @@
-#Let's Start Scala Functional Programming
+#Let's Start Functional Programming in Scala
 
 [![Build status](https://travis-ci.org/lannerate/StartScalaFP.svg?branch=master)](https://travis-ci.org/lannerate/StartScalaFP)
 
