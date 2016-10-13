@@ -1,8 +1,5 @@
 package fp.datastructs
 
-import scala.runtime.Nothing$
-import scala.util.hashing.Hashing.Default
-
 /**
   * Created by hzhang3 on 10/13/2016.
   */
