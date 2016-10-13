@@ -21,12 +21,26 @@ class OptionTest extends FunSpec{
     }
 
     it("test the function flatMap() for Option"){
-      val flatMaped = Some(340).flatMap(_ => Some( 800.45 )).get
-
-      assert(flatMaped == 800.45)
-
-      val empty = None.flatMap(_ => Some(23.8))
+      val v = Some(340).flatMap(_ => Some( 800.45 )).get
+      assert(v == 800.45)
     }
+
+    it("test the function getOrElse() for Option"){
+      val v = None.flatMap(_ => Some(23.8)).getOrElse(10)
+      assert(v == 10)
+
+      val v2 = Some(23).getOrElse(45)
+      assert(v2 == 23)
+    }
+
+    it("test the function orElse() for Option"){
+      val v = Some(34).orElse(Some(233))
+      assert(v == Some(34))
+
+      val v2 = None.orElse(Some(233))
+      assert(v2 == Some(233))
+    }
+
 
   }
 }
