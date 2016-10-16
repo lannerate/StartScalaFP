@@ -1,5 +1,7 @@
 package fp.datastructs
 
+import java.util.regex.{Pattern, PatternSyntaxException}
+
 /**
   * Created by hzhang3 on 10/13/2016.
   */
@@ -18,6 +20,8 @@ sealed trait Option[+A] {
   def orElse[B >:A](ob : =>Option[B]): Option[B]
 
   def filter(f: A => Boolean): Option[A]
+
+  def lift[A,B](f: A => B):Option[A]=>Option[B]
 }
 
 case class Some[+A](x: A) extends Option[A] {
@@ -34,6 +38,8 @@ case class Some[+A](x: A) extends Option[A] {
   override def orElse[B >: A](ob: => Option[B]): Option[B] = if (x == null) ob else Some(x)
 
   override def filter(f: (A) => Boolean): Option[A] = if (f(x)) Some(x) else None
+
+  override def lift[A, B](f: (A) => B): (Option[A]) => Option[B] = _ map f
 }
 
 case object None extends Option[Nothing] {
@@ -50,12 +56,23 @@ case object None extends Option[Nothing] {
   override def orElse[B >: Nothing](ob: => Option[B]): Option[B] = ob
 
   override def filter(f: (Nothing) => Boolean): Option[Nothing] = None
+
+  override def lift[A, B](f: (A) => B): (Option[A]) => Option[B] = _ map f
 }
 
-object Option {
-
+object Options {
 
   def apply[A](x: A):Option[A] = if (x == null) None else Some(x)
+
+  def pattern(s:String):Option[Pattern] =
+    try{
+      Some(Pattern.compile(s))
+    } catch {
+      case e: PatternSyntaxException => None
+    }
+
+  def mkMatcher(regex:String):Option[String => Boolean] =
+    pattern(regex) map( reg => (s:String) => reg.matcher(s).matches() )
 
 }
 

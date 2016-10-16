@@ -44,5 +44,15 @@ class OptionTest extends FunSpec{
       assert(v2 == None)
     }
 
+    it("test the function pattern() for Options, Start with the specific char sequence"){
+      val pattern = Options.pattern("^Star").get.matcher("Starting, GOOD, String").find();
+      assert(pattern == true)
+    }
+
+    it("verify telephone regex using the function mkMatcher()"){
+      val matched = Options.mkMatcher("\\d{3,4}-\\d{7,8}").get.apply("0755-28792686")
+      assert(matched == true)
+    }
+
   }
 }
