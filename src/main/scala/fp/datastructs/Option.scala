@@ -74,6 +74,17 @@ object Options {
   def mkMatcher(regex:String):Option[String => Boolean] =
     pattern(regex) map( reg => (s:String) => reg.matcher(s).matches() )
 
+  def mkMatcher_1(reg:String):Option[String => Boolean] =
+    for {
+      p <- pattern(reg)
+    }yield ((s:String) => p.matcher(s).matches())
+
+  def doesMatches(reg:String,s:String):Option[Boolean] =
+    for {
+      p <- mkMatcher_1(reg)
+    }yield p(s)
+
+
 }
 
 object Math {

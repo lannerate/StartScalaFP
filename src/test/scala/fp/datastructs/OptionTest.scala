@@ -54,5 +54,14 @@ class OptionTest extends FunSpec{
       assert(matched == true)
     }
 
+    it("verify phone format using the function mkMatcher_1()"){
+      val matched = Options.mkMatcher_1("\\d{3,4}-\\d{8}").get.apply("0987-23838099")
+      assert(matched == true)
+    }
+
+    it("Does phone format matches the regex using the function doesMatches()"){
+      val matched = Options.doesMatches("\\d{4}-\\d{7}", "0231-7788333")
+      assert(matched == true)
+    }
   }
 }
