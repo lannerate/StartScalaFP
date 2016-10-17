@@ -84,6 +84,11 @@ object Options {
       p <- mkMatcher_1(reg)
     }yield p(s)
 
+  def bothMatch(reg1:String,reg2:String,s:String):Option[Boolean]=
+    for {
+      f <- mkMatcher(reg1)
+      g <- mkMatcher(reg2)
+    }yield f(s) && g(s)
 
 }
 
