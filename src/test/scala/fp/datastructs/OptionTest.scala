@@ -70,7 +70,13 @@ class OptionTest extends FunSpec{
     }
 
     it("Does the phone format matched the both regex using the function bothMatch_1()"){
-      val bothMatched = Options.bothMath_1("\\d{3,4}-\\d{7}","\\d{3}-\\d{7,8}","089-5678333").get
+      val bothMatched = Options.bothMatch_1("\\d{3,4}-\\d{7}","\\d{3}-\\d{7,8}","089-5678333").get
+      assert(bothMatched == true)
+    }
+
+
+    it("Does the phone format matched the both regex using the function bothMatch_2()"){
+      val bothMatched = Options.bothMatch_2("\\d{3,4}-\\d{7}","\\d{3}-\\d{7,8}","089-5678333").get
       assert(bothMatched == true)
     }
 
