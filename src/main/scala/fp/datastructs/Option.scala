@@ -90,6 +90,9 @@ object Options {
       g <- mkMatcher(reg2)
     }yield f(s) && g(s)
 
+  def bothMath_1(reg1:String, reg2:String, s:String):Option[Boolean] =
+    mkMatcher(reg1) flatMap( f => mkMatcher(reg2) map( g => f(s) && g(s) ) )
+
 }
 
 object Math {
