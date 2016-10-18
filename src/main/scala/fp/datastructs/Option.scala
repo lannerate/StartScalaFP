@@ -99,6 +99,13 @@ object Options {
   def bothMatch_2(reg1:String, reg2:String, s:String):Option[Boolean] =
     map2(mkMatcher(reg1),mkMatcher(reg2))( (a,b) => a.apply(s) && b.apply(s) )
 
+  def sequence[A](a:List[Option[A]]):Option[List[A]] = a match {
+    case Nil => Some(Nil)
+    case Cons(h,t) => h.flatMap( hh => sequence(t) map( Cons(hh, _)) )
+  }
+
+
+
 }
 
 object Math {

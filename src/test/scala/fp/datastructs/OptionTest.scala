@@ -80,5 +80,10 @@ class OptionTest extends FunSpec{
       assert(bothMatched == true)
     }
 
+    it("Test Options.sequence(List(Some(1), Some(Nil), Some(2), Some(3))) should return List(1, Nil, 2, 3)"){
+      val sequence = Options.sequence(List(Some(1), Some(Nil), Some(2), Some(3))).get
+      assert(sequence == List(1, Nil, 2, 3))
+    }
+
   }
 }
