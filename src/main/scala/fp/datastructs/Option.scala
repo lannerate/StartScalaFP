@@ -23,23 +23,19 @@ sealed trait Option[+A] {
 
   def filter(f: A => Boolean): Option[A] = if(f(get)) Some(get) else None
 
-  def lift[A,B](f: A => B):Option[A]=>Option[B]
+  def lift[A,B](f: A => B):Option[A]=>Option[B] = _ map f
 }
 
 case class Some[+A](x: A) extends Option[A] {
   override def isEmpty: Boolean = false
 
   override def get = x
-
-  override def lift[A, B](f: (A) => B): (Option[A]) => Option[B] = _ map f
 }
 
 case object None extends Option[Nothing] {
   override def isEmpty: Boolean = true
 
   override def get = throw new NoSuchElementException("None have not value!")
-
-  override def lift[A, B](f: (A) => B): (Option[A]) => Option[B] = _ map f
 }
 
 object Options {
