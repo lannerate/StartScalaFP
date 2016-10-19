@@ -2,6 +2,8 @@ package fp.datastructs
 
 import java.util.regex.{Pattern, PatternSyntaxException}
 
+import fp.datastructs
+
 /**
   * Created by hzhang3 on 10/13/2016.
   */
@@ -11,7 +13,7 @@ sealed trait Option[+A] {
 
   def get: A
 
-  def map[B](f: A => B): Option[B]
+  def map[B](f: A => B): Option[B] = if (isEmpty) None else Some(f(get))
 
   def flatMap[B](f: A => Option[B]):Option[B]
 
@@ -29,8 +31,6 @@ case class Some[+A](x: A) extends Option[A] {
 
   override def get = x
 
-  override def map[B](f: A => B): Option[B] = Some(f(x))
-
   override def flatMap[B](f: (A) => Option[B]): Option[B] = f(x)
 
   override def getOrElse[B >: A](default: => B): B = if(x == null) default else x
@@ -46,8 +46,6 @@ case object None extends Option[Nothing] {
   override def isEmpty: Boolean = true
 
   override def get = throw new NoSuchElementException("None have not value!")
-
-  override def map[B](f: Nothing => B): Option[B] = None
 
   override def flatMap[B](f: (Nothing) => Option[B]): Option[B] = None
 
@@ -103,9 +101,6 @@ object Options {
     case Nil => Some(Nil)
     case Cons(h,t) => h.flatMap( hh => sequence(t) map( Cons(hh, _)) )
   }
-
-
-
 }
 
 object Math {
