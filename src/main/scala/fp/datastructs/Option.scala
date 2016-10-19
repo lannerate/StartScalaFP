@@ -17,11 +17,11 @@ sealed trait Option[+A] {
 
   def flatMap[B](f: A => Option[B]):Option[B] = if (isEmpty) None else f(get)
 
-  def getOrElse[B >:A](default: => B): B = if(get == null) default else get
+  def getOrElse[B >:A](default: => B): B = if(isEmpty) default else get
 
-  def orElse[B >:A](ob : =>Option[B]): Option[B]
+  def orElse[B >:A](ob : =>Option[B]): Option[B] = if(isEmpty) ob else Some(get)
 
-  def filter(f: A => Boolean): Option[A]
+  def filter(f: A => Boolean): Option[A] = if(f(get)) Some(get) else None
 
   def lift[A,B](f: A => B):Option[A]=>Option[B]
 }
@@ -31,10 +31,6 @@ case class Some[+A](x: A) extends Option[A] {
 
   override def get = x
 
-  override def orElse[B >: A](ob: => Option[B]): Option[B] = if (x == null) ob else Some(x)
-
-  override def filter(f: (A) => Boolean): Option[A] = if (f(x)) Some(x) else None
-
   override def lift[A, B](f: (A) => B): (Option[A]) => Option[B] = _ map f
 }
 
@@ -42,10 +38,6 @@ case object None extends Option[Nothing] {
   override def isEmpty: Boolean = true
 
   override def get = throw new NoSuchElementException("None have not value!")
-
-  override def orElse[B >: Nothing](ob: => Option[B]): Option[B] = ob
-
-  override def filter(f: (Nothing) => Boolean): Option[Nothing] = None
 
   override def lift[A, B](f: (A) => B): (Option[A]) => Option[B] = _ map f
 }

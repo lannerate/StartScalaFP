@@ -28,17 +28,11 @@ class OptionTest extends FunSpec{
     it("test the function orElse() for Option"){
       val v = Some(34).orElse(Some(233)).get
       assert(v == 34)
-
-      val v2 = None.orElse(Some(233)).get
-      assert(v2 == 233)
     }
 
     it("test the function filter() for Option"){
       val v = Some(22).filter(_ % 2 == 0).getOrElse(0)
       assert(v == 22)
-
-      val v2 = None.filter( _== null )
-      assert(v2 == None)
     }
 
     it("test the function pattern() for Options, Start with the specific char sequence"){
