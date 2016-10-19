@@ -76,5 +76,9 @@ class OptionTest extends FunSpec{
       assert(sequence == scala.List(1, Nil, 2, 3))
     }
 
+    it("test the function traverse() for Options"){
+      val traversed = Options.traverse(scala.List(1,2,3,4))( Some(_).map( _ * 2.5) ).get
+      assert(traversed == scala.List(2.5,5.0,7.5,10.0))
+    }
   }
 }

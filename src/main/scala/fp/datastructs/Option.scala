@@ -83,6 +83,16 @@ object Options {
   def parsePattern(a:scala.List[String]):Option[scala.List[Pattern]]=
     sequence( a map pattern )
 
+  def traverse_2[A,B](a:scala.List[A])(f: A => Option[B]):Option[scala.List[B]] =
+    sequence( a map f)
+
+  def traverse[A,B](a:scala.List[A])(f: A => Option[B]):Option[scala.List[B]] = a match {
+    case scala.Nil => Some(scala.Nil)
+    case h :: t => map2(f(h), traverse(t)(f))(_ :: _)
+  }
+
+  def sequenceByTraverse[A](a: scala.List[Option[A]]):Option[scala.List[A]] =
+    traverse(a)(t => t)
 }
 
 object Math {
