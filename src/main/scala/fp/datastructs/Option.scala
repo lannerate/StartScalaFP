@@ -2,8 +2,6 @@ package fp.datastructs
 
 import java.util.regex.{Pattern, PatternSyntaxException}
 
-import fp.datastructs
-
 /**
   * Created by hzhang3 on 10/13/2016.
   */
@@ -77,10 +75,14 @@ object Options {
   def bothMatch_2(reg1:String, reg2:String, s:String):Option[Boolean] =
     map2(mkMatcher(reg1),mkMatcher(reg2))( (a,b) => a.apply(s) && b.apply(s) )
 
-  def sequence[A](a:List[Option[A]]):Option[List[A]] = a match {
-    case Nil => Some(Nil)
-    case Cons(h,t) => h.flatMap( hh => sequence(t) map( Cons(hh, _)) )
+  def sequence[A](a: scala.List[Option[A]]):Option[scala.List[A]] = a match {
+    case scala.Nil => Some(scala.Nil)
+    case h :: t => h.flatMap( hh => sequence(t) map( hh :: _ ))
   }
+
+  def parsePattern(a:scala.List[String]):Option[scala.List[Pattern]]=
+    sequence( a map pattern )
+
 }
 
 object Math {
