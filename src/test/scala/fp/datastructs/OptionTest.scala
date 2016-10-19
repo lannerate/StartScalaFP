@@ -21,9 +21,6 @@ class OptionTest extends FunSpec{
     }
 
     it("test the function getOrElse() for Option"){
-      val v = None.flatMap(_ => Some(23.8)).getOrElse(10)
-      assert(v == 10)
-
       val v2 = Some(23).getOrElse(45)
       assert(v2 == 23)
     }

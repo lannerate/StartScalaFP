@@ -17,7 +17,7 @@ sealed trait Option[+A] {
 
   def flatMap[B](f: A => Option[B]):Option[B] = if (isEmpty) None else f(get)
 
-  def getOrElse[B >:A](default: => B): B
+  def getOrElse[B >:A](default: => B): B = if(get == null) default else get
 
   def orElse[B >:A](ob : =>Option[B]): Option[B]
 
@@ -31,8 +31,6 @@ case class Some[+A](x: A) extends Option[A] {
 
   override def get = x
 
-  override def getOrElse[B >: A](default: => B): B = if(x == null) default else x
-
   override def orElse[B >: A](ob: => Option[B]): Option[B] = if (x == null) ob else Some(x)
 
   override def filter(f: (A) => Boolean): Option[A] = if (f(x)) Some(x) else None
@@ -44,8 +42,6 @@ case object None extends Option[Nothing] {
   override def isEmpty: Boolean = true
 
   override def get = throw new NoSuchElementException("None have not value!")
-
-  override def getOrElse[B >: Nothing](default: => B): B = default
 
   override def orElse[B >: Nothing](ob: => Option[B]): Option[B] = ob
 
