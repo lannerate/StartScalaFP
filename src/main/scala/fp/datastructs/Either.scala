@@ -20,7 +20,25 @@ sealed trait Either[+E, +A] {
     a <- this; b1 <- b } yield f(a,b1)
 }
 
-case class Left[+E](value: E) extends Either[E, Nothing]
+case class Left[+E](value: E) extends Either[E, Nothing]{
+   def get = value
+}
 
-case class Right[+A](value: A) extends Either[Nothing, A]
+case class Right[+A](value: A) extends Either[Nothing, A]{
+   def get = value
+}
 
+object Either {
+  def mean(xs:IndexedSeq[Double]):Either[String,Double] =
+    if(xs.isEmpty)
+      Left("mean of empty list")
+    else
+      Right(xs.sum / xs.length)
+
+  def safeDiv(x:Double, y:Double):Either[Exception,Double] =
+    try{
+      Right( x / y )
+    }catch {
+      case e:Exception => Left(e)
+    }
+}
