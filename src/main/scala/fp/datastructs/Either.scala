@@ -2,6 +2,10 @@ package fp.datastructs
 
 
 sealed trait Either[+E, +A] {
+  def isRight:Boolean
+
+  def isLeft:Boolean
+
   def map[B](f: A => B): Either[E, B] = this match {
     case Left(e) => Left(e)
     case Right(a) => Right(f(a))
@@ -21,11 +25,17 @@ sealed trait Either[+E, +A] {
 }
 
 case class Left[+E](value: E) extends Either[E, Nothing]{
-   def get = value
+  override def isRight: Boolean = false
+
+  override def isLeft: Boolean = true
+
 }
 
 case class Right[+A](value: A) extends Either[Nothing, A]{
-   def get = value
+  override def isRight: Boolean = true
+
+  override def isLeft: Boolean = false
+
 }
 
 object Either {
