@@ -18,10 +18,10 @@ class EitherTest extends FunSpec {
       val empty = Either.mean(IndexedSeq())
       assert(empty.isInstanceOf[Left[String]])
     }
-
     it("test the function safeDiv() of Either ") {
       val result = Either.safeDiv(9, 3)
       assert(result == Right(3.0))
     }
+
   }
 }
